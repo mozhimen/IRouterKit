@@ -20,6 +20,13 @@ import SwiftUI
 //    }
 //}
 
+#Preview {
+@StateObject var navigator = Navigator<AppDestination>(debounceInterval: 0.5)
+    ContentView()
+        .navigationHost(navigator: navigator)
+        .environmentObject(navigator)
+}
+
 struct ContentView: View {
     @EnvironmentObject var navigator: Navigator<AppDestination>
     private let sampleProduct = Product(id: "1", name: "示例产品")

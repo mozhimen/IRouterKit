@@ -35,11 +35,14 @@ public final class Navigator<D: NavigationDestination>: ObservableObject {
     // 导航方法
     public func navigate(to destination: D, type: NavigationType = .push) {
         // 防抖检查
-        guard Date().timeIntervalSince(lastNavigationTime) > debounceInterval else { return }
+        guard Date().timeIntervalSince(lastNavigationTime) > debounceInterval else {
+            print("navigate: 防抖检查")
+            return }
         lastNavigationTime = Date()
         
         // 中间件拦截
         if let middleware = middleware, !middleware(destination) {
+            print("navigate: 中间件拦截")
             return
         }
         
@@ -48,7 +51,9 @@ public final class Navigator<D: NavigationDestination>: ObservableObject {
             switch type {
             case .push:
                 self.navigationPath.append(destination)
+                print("navigate: .push (\(self.navigationPath)")
             case .sheet, .fullScreenCover:
+                print("navigate: .sheet, .fullScreenCover")
                 self.presentedItem = destination
                 self.presentationType = type
             }
