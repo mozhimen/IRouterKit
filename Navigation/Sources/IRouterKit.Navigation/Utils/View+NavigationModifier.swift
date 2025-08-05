@@ -9,26 +9,30 @@ import SwiftUI
 // MARK: - 视图扩展
 public extension View {
     /// 添加导航处理能力
-    func navigationHost<D: NavigationDestination>(
+    func modifierNavigation<D: PNavigationDestination>(
         navigator: Navigator<D>
     ) -> some View {
-        self.modifier(NavigationHostModifier(navigator: navigator))
+        self.modifier(
+            NavigationModifier(
+                navigator: navigator
+            ))
     }
     
     /// 添加防抖点击导航
-    func withDebouncedNavigation<V:View,D: NavigationDestination>(
+    func modifierDebouncedNavigation<V: View,D: PNavigationDestination>(
         to destination: D,
         type: NavigationType = .push,
         navigator: Navigator<D>,
         debounceInterval: TimeInterval = 0.5,
         @ViewBuilder label:@escaping () -> V
     ) ->some View {
-        modifier(NavigationDebouncedModifier(
-            destination: destination,
-            type: type,
-            navigator: navigator,
-            debounceInterval: debounceInterval,
-            label: label
-        ))
+        self.modifier(
+            NavigationDebouncedModifier(
+                destination: destination,
+                type: type,
+                navigator: navigator,
+                debounceInterval: debounceInterval,
+                label: label
+            ))
     }
 }

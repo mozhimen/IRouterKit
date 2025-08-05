@@ -8,19 +8,19 @@ import SwiftUI
 
 extension Navigator {
     #if os(macOS)
-    public func navigateOnMac(to destination: D) {
+    public func navigateOnMac(to destination: D, nsWindow: NSWindow = NSWindow(
+        contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
+        styleMask: [.titled, .closable, .resizable],
+        backing: .buffered,
+        defer: false
+    )) {
         // macOS 特定的导航逻辑
         if let window = NSApp.keyWindow {
             let hostingView = NSHostingView(
                 rootView: destination.makeView()
-                    .navigationHost(coordinator: self)
+                    .modifierNavigation(navigator: self)
             )
-            let newWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
-                styleMask: [.titled, .closable, .resizable],
-                backing: .buffered,
-                defer: false
-            )
+            let newWindow = nsWindow
             newWindow.contentView = hostingView
             newWindow.makeKeyAndOrderFront(nil)
         }

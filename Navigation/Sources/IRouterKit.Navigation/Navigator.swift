@@ -7,7 +7,7 @@
 import SwiftUI
 // MARK: - 导航协调器
 @MainActor
-public final class Navigator<D: NavigationDestination>: ObservableObject {
+public final class Navigator<D: PNavigationDestination>: ObservableObject {
     
     // 当前导航栈
     @Published public var navigationPath = [D]()
@@ -60,9 +60,13 @@ public final class Navigator<D: NavigationDestination>: ObservableObject {
         }
     }
     
+    public func isRoot() -> Bool {
+        navigationPath.isEmpty
+    }
+    
     // 返回方法
     public func pop() {
-        if !navigationPath.isEmpty {
+        if !isRoot() {
             navigationPath.removeLast()
         }
     }

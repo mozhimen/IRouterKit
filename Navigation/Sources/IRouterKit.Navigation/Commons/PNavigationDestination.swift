@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - 导航动作协议
 @MainActor
-public protocol NavigationDestination:  Identifiable,Sendable,Hashable {
+public protocol PNavigationDestination:  Identifiable,Sendable,Hashable {
     associatedtype DestinationView: View
     @ViewBuilder func makeView() -> DestinationView
 }
