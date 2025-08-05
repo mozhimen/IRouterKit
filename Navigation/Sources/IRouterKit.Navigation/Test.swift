@@ -7,19 +7,6 @@
 import SwiftUI
 
 
-//@main
-//struct MyApp: App {
-//    @StateObject private var navigator = Navigator<AppDestination>(debounceInterval: 0.5)
-//    
-//    var body: some Scene {
-//        WindowGroup {
-//            ContentView()
-//                .navigationHost(navigator: navigator)
-//                .environmentObject(navigator)
-//        }
-//    }
-//}
-
 #Preview {
 @StateObject var navigator = Navigator<AppDestination>(debounceInterval: 0.5)
     ContentView()
