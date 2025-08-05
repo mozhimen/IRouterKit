@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "IRouterKit.Navigation",
-    platforms: [.macOS(.v10_15),.iOS(.v17)],
+    platforms: [.macOS(.v10_15),.iOS(.v15)],
     
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.

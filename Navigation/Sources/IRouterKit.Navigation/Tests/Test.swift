@@ -8,7 +8,7 @@ import SwiftUI
 
 
 #Preview {
-    @Previewable @StateObject var navigator = Navigator<AppDestination>(debounceInterval: 0.5)
+    @StateObject var navigator = Navigator<AppDestination>(debounceInterval: 0.5)
     //    ContentView()
     //        .modifierNavigation(navigator: navigator)
     //        .environmentObject(navigator)
@@ -18,45 +18,45 @@ import SwiftUI
         .modifierNavigation(navigator: navigator)
 }
 
-struct NavigationStackDemo: View {
-    
-    let colors: [Color] = [.red, .gray, .green, .orange, .pink, .brown, .cyan, .indigo, .purple, .yellow]
-    
-    var body: some View {
-        NavigationStack {
-            List(colors, id: \.self) { color in
-                NavigationLink(value: color) {
-                    Text("\(color.description.capitalized)")
-                }
-            }
-            .listStyle(.plain)
-            .navigationTitle("NavigationView")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: Color.self) { color in
-                ColorView(color: color)
-            }
-        }
-    }
-}
+//struct NavigationStackDemo: View {
+//    
+//    let colors: [Color] = [.red, .gray, .green, .orange, .pink, .brown, .cyan, .indigo, .purple, .yellow]
+//    
+//    var body: some View {
+//        NavigationStack {
+//            List(colors, id: \.self) { color in
+//                NavigationLink(value: color) {
+//                    Text("\(color.description.capitalized)")
+//                }
+//            }
+//            .listStyle(.plain)
+//            .navigationTitle("NavigationView")
+//            .navigationBarTitleDisplayMode(.inline)
+//            .navigationDestination(for: Color.self) { color in
+//                ColorView(color: color)
+//            }
+//        }
+//    }
+//}
 
-struct NavigationStackDemo2: View {
-    @EnvironmentObject var navigator: Navigator<AppDestination>
-    let colors: [Color] = [.red, .gray, .green, .orange, .pink, .brown, .cyan, .indigo, .purple, .yellow]
-    
-    var body: some View {
-        NavigationStack {
-            List(colors, id: \.self) { color in
-                NavigationLink(value: AppDestination.color(color)) {
-                    Text("\(color.description.capitalized)")
-                }
-            }
-            .listStyle(.plain)
-            .navigationDestination(for: AppDestination.self) {
-                $0.makeView()
-            }
-        }
-    }
-}
+//struct NavigationStackDemo2: View {
+//    @EnvironmentObject var navigator: Navigator<AppDestination>
+//    let colors: [Color] = [.red, .gray, .green, .orange, .pink, .brown, .cyan, .indigo, .purple, .yellow]
+//    
+//    var body: some View {
+//        NavigationStack {
+//            List(colors, id: \.self) { color in
+//                NavigationLink(value: AppDestination.color(color)) {
+//                    Text("\(color.description.capitalized)")
+//                }
+//            }
+//            .listStyle(.plain)
+//            .navigationDestination(for: AppDestination.self) {
+//                $0.makeView()
+//            }
+//        }
+//    }
+//}
 
 struct NavigationStackDemo3: View {
     @EnvironmentObject var navigator: Navigator<AppDestination>
@@ -73,30 +73,30 @@ struct NavigationStackDemo3: View {
     }
 }
 
-struct NavigationStackDemo4: View {
-    @EnvironmentObject var navigator: Navigator<AppDestination>
-    let colors: [Color] = [.red, .gray, .green, .orange, .pink, .brown, .cyan, .indigo, .purple, .yellow]
-    let color:Color = .red
-    
-    var body: some View {
-        NavigationStack(path: $navigator.navigationPath) {
-            //        List(colors, id: \.self) { color in
-            Text("\(color.description.capitalized)")
-                .onTapGesture(perform: {
-                    navigator.navigate(to: .color(color))
-                })
-                .background{
-                    Color.clear
-                        .navigationDestination(for: AppDestination.self, destination: { destination in
-                            destination.makeView()
-                        })
-                        .frame(width: 0,height: 0)
-                }
-        }
-        //        }
-        //        .listStyle(.plain)
-    }
-}
+//struct NavigationStackDemo4: View {
+//    @EnvironmentObject var navigator: Navigator<AppDestination>
+//    let colors: [Color] = [.red, .gray, .green, .orange, .pink, .brown, .cyan, .indigo, .purple, .yellow]
+//    let color:Color = .red
+//    
+//    var body: some View {
+//        NavigationStack(path: $navigator.navigationPath) {
+//            //        List(colors, id: \.self) { color in
+//            Text("\(color.description.capitalized)")
+//                .onTapGesture(perform: {
+//                    navigator.navigate(to: .color(color))
+//                })
+//                .background{
+//                    Color.clear
+//                        .navigationDestination(for: AppDestination.self, destination: { destination in
+//                            destination.makeView()
+//                        })
+//                        .frame(width: 0,height: 0)
+//                }
+//        }
+//        //        }
+//        //        .listStyle(.plain)
+//    }
+//}
 
 struct NavigationStackDemo5: View {
     @EnvironmentObject var navigator: Navigator<AppDestination>
@@ -104,15 +104,17 @@ struct NavigationStackDemo5: View {
     let color:Color = .red
     
     var body: some View {
-        NavigationHostView<Text,AppDestination>(content: {
-            //        NavigationStack.init(path: $navigator.navigationPath, root: {
-                        //        List(colors, id: \.self) { color in
-                        Text("\(color.description.capitalized)")
-                            .onTapGesture(perform: {
-                                navigator.navigate(to: .color(color))
-                            }) as! Text
-                    //        }
-                    //        .listStyle(.plain)
+                NavigationHostView<_,AppDestination>(content: {
+//        NavigationStack.init(path: $navigator.navigationPath, root: {
+            //                                List(colors, id: \.self) { color in
+            Text("\(color.description.capitalized)")
+                .onTapGesture(perform: {
+                    navigator.navigate(to: .color(color))
+                })
+                .modifierNavigation(navigator: navigator)
+            //                            }
+            //                            .listStyle(.plain)
+            //                    })
             //        })
         })
     }
@@ -148,12 +150,15 @@ struct ColorView: View {
     }
     
     var body: some View {
-        color
-            .ignoresSafeArea()
-        Text("Click")
-            .onTapGesture(perform: {
-                navigator.navigate(to: .settings)
-            })
+        VStack(content: {
+            color
+                .ignoresSafeArea()
+            Text("Click")
+                .onTapGesture(perform: {
+                    navigator.navigate(to: .settings("1"))
+                })
+        })
+        
     }
 }
 
@@ -181,7 +186,7 @@ struct ContentView: View {
             
             // Sheet形式展示
             Button("设置") {
-                navigator.navigate(to: .settings, type: .sheet)
+                navigator.navigate(to: .settings("1"), type: .sheet)
             }
             
             // 测试返回按钮
@@ -198,14 +203,14 @@ struct ContentView: View {
 enum AppDestination: PNavigationDestination {
     case productDetail(Product)
     case userProfile(User)
-    case settings
+    case settings(String)
     case color(Color)
     
     nonisolated var id: String {
         switch self {
         case .productDetail(let product): return "product-\(product.id)"
         case .userProfile(let user): return "user-\(user.id)"
-        case .settings: return "settings"
+        case .settings(let str): return "settings-\(str)"
         case .color(let color): return "color-\(color)"
         }
     }
@@ -244,8 +249,8 @@ enum AppDestination: PNavigationDestination {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.blue.opacity(0.3))
             
-        case .settings:
-            Text("设置页面")
+        case .settings(let str):
+            Text("设置页面\(str)")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.green.opacity(0.3))
         }
