@@ -117,12 +117,12 @@ enum AppDestination: NavigationDestination {
         }
 }
 
-struct Product: Identifiable {
+struct Product: Identifiable,Sendable {
     let id: String
     let name: String
 }
 
-struct User: Identifiable {
+struct User: Identifiable,Sendable {
     let id: String
     let name: String
 }
