@@ -67,6 +67,7 @@ public final class Navigator<D: PNavigationDestination>: ObservableObject {
     // 返回方法
     public func pop() {
         if !isRoot() {
+            print("pop")
             navigationPath.removeLast()
         }
     }
